@@ -1,17 +1,15 @@
-// src/pages/Settings.jsx
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Moon, Sun, Bell, Smartphone, Globe, 
-  CreditCard, Lock, HelpCircle, LogOut, 
-  ChevronRight, Zap, Sparkles, User
+  User, Settings, LogOut, Bell, Moon, Sun, 
+  CreditCard, Shield, HelpCircle, ChevronRight,
+  Sparkles, Smartphone, Gift
 } from 'lucide-react';
 
-const Settings = () => {
+const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(true);
   const [notifications, setNotifications] = useState(true);
-  const [currency, setCurrency] = useState('USD');
   
   // Simulate loading state
   useEffect(() => {
@@ -71,24 +69,79 @@ const Settings = () => {
       animate="visible"
       className="pb-24"
     >
-      <motion.div variants={itemVariants} className="mb-5">
-        <div className="flex justify-between items-center">
-          <h1 className="text-title font-display font-semibold">Settings</h1>
+      {/* Profile Header */}
+      <motion.div variants={itemVariants} className="mb-6">
+        <div className="flex items-center">
           <motion.div 
-            className="w-10 h-10 rounded-full bg-dark-card flex items-center justify-center"
+            className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mr-4 relative"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <User size={20} className="text-light-text/70" />
+            <User size={32} className="text-white" />
+            <motion.div 
+              className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-dark-card border-2 border-dark-background flex items-center justify-center"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Settings size={16} className="text-light-text" />
+            </motion.div>
           </motion.div>
+          
+          <div>
+            <h1 className="text-title font-display font-semibold">Alex Johnson</h1>
+            <p className="text-small text-light-text/70">alex.johnson@example.com</p>
+          </div>
         </div>
       </motion.div>
       
-      {/* App Preferences Section */}
-      <motion.div variants={itemVariants} className="mb-2">
-        <h2 className="text-subtitle font-display font-semibold mb-3">App Preferences</h2>
+      {/* Premium Banner */}
+      <motion.div variants={itemVariants} className="mb-6">
+        <motion.div 
+          className="card bg-gradient-to-br from-accent/90 to-secondary/90 p-4 relative overflow-hidden"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          {/* Animated sparkles */}
+          <motion.div 
+            className="absolute top-2 right-2"
+            animate={{ 
+              rotate: [0, 15, -5, 0],
+              scale: [1, 1.2, 0.9, 1]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 1
+            }}
+          >
+            <Sparkles size={20} className="text-white" />
+          </motion.div>
+          
+          <div className="flex items-center">
+            <div className="mr-4">
+              <Gift size={28} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-body font-medium text-white mb-1">Upgrade to Premium</h3>
+              <p className="text-small text-white/80">Get advanced insights and exclusive features</p>
+            </div>
+            <motion.button 
+              className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-lg text-white text-small font-medium"
+              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.3)' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Upgrade
+            </motion.button>
+          </div>
+        </motion.div>
       </motion.div>
       
-      {/* Preferences Items */}
+      {/* Settings Section */}
+      <motion.div variants={itemVariants} className="mb-2">
+        <h2 className="text-subtitle font-display font-semibold mb-3">Settings</h2>
+      </motion.div>
+      
+      {/* Settings Items */}
       <motion.div variants={itemVariants} className="mb-6">
         <div className="card bg-dark-card/80 backdrop-blur-sm border border-white/5 p-1 divide-y divide-white/5">
           {/* Dark Mode Toggle */}
@@ -142,31 +195,6 @@ const Settings = () => {
               </motion.div>
             </div>
           </div>
-          
-          {/* Currency Selector */}
-          <div className="p-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-9 h-9 rounded-full bg-dark-elevated flex items-center justify-center mr-3">
-                  <Globe size={18} className="text-primary" />
-                </div>
-                <span className="text-body">Currency</span>
-              </div>
-              
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                className="bg-dark-elevated text-light-text/80 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all appearance-none pr-8"
-                style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 0.5rem center", backgroundSize: "1.5em 1.5em" }}
-    >
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
-                <option value="GBP">GBP (£)</option>
-                <option value="JPY">JPY (¥)</option>
-                <option value="CAD">CAD ($)</option>
-              </select>
-            </div>
-          </div>
         </div>
       </motion.div>
       
@@ -178,21 +206,6 @@ const Settings = () => {
       {/* Account Items */}
       <motion.div variants={itemVariants} className="mb-6">
         <div className="card bg-dark-card/80 backdrop-blur-sm border border-white/5 p-1 divide-y divide-white/5">
-          {/* Profile */}
-          <motion.div 
-            className="p-3 flex items-center justify-between cursor-pointer"
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
-            whileTap={{ scale: 0.99 }}
-          >
-            <div className="flex items-center">
-              <div className="w-9 h-9 rounded-full bg-dark-elevated flex items-center justify-center mr-3">
-                <User size={18} className="text-primary" />
-              </div>
-              <span className="text-body">Profile Information</span>
-            </div>
-            <ChevronRight size={18} className="text-light-text/50" />
-          </motion.div>
-          
           {/* Payment Methods */}
           <motion.div 
             className="p-3 flex items-center justify-between cursor-pointer"
@@ -216,55 +229,28 @@ const Settings = () => {
           >
             <div className="flex items-center">
               <div className="w-9 h-9 rounded-full bg-dark-elevated flex items-center justify-center mr-3">
-                <Lock size={18} className="text-primary" />
+                <Shield size={18} className="text-primary" />
               </div>
               <span className="text-body">Security</span>
             </div>
             <ChevronRight size={18} className="text-light-text/50" />
           </motion.div>
-        </div>
-      </motion.div>
-      
-      {/* Premium Features */}
-      <motion.div variants={itemVariants} className="mb-6">
-        <motion.div 
-          className="card bg-gradient-to-br from-accent/90 to-secondary/90 p-4 relative overflow-hidden"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {/* Animated sparkles */}
-          <motion.div 
-            className="absolute top-2 right-2"
-            animate={{ 
-              rotate: [0, 15, -5, 0],
-              scale: [1, 1.2, 0.9, 1]
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 1
-            }}
-          >
-            <Sparkles size={20} className="text-white" />
-          </motion.div>
           
-          <div className="flex items-center">
-            <div className="mr-4">
-              <Zap size={28} className="text-white" />
+          {/* App Settings */}
+          <motion.div 
+            className="p-3 flex items-center justify-between cursor-pointer"
+            whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+            whileTap={{ scale: 0.99 }}
+          >
+            <div className="flex items-center">
+              <div className="w-9 h-9 rounded-full bg-dark-elevated flex items-center justify-center mr-3">
+                <Smartphone size={18} className="text-primary" />
+              </div>
+              <span className="text-body">App Settings</span>
             </div>
-            <div className="flex-1">
-              <h3 className="text-body font-medium text-white mb-1">Upgrade to Premium</h3>
-              <p className="text-small text-white/80">Get advanced insights and exclusive features</p>
-            </div>
-            <motion.button 
-              className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-lg text-white text-small font-medium"
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.3)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Upgrade
-            </motion.button>
-          </div>
-        </motion.div>
+            <ChevronRight size={18} className="text-light-text/50" />
+          </motion.div>
+        </div>
       </motion.div>
       
       {/* Support Section */}
@@ -289,22 +275,7 @@ const Settings = () => {
             </div>
             <ChevronRight size={18} className="text-light-text/50" />
           </motion.div>
-          
-          {/* App Info */}
-          <motion.div 
-            className="p-3 flex items-center justify-between cursor-pointer"
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
-            whileTap={{ scale: 0.99 }}
-          >
-            <div className="flex items-center">
-              <div className="w-9 h-9 rounded-full bg-dark-elevated flex items-center justify-center mr-3">
-                <Smartphone size={18} className="text-primary" />
-              </div>
-              <span className="text-body">About App</span>
-            </div>
-            <span className="text-tiny text-light-text/50">v2.0.1</span>
-          </motion.div>
-      </div>
+        </div>
       </motion.div>
       
       {/* Logout Button */}
@@ -319,18 +290,15 @@ const Settings = () => {
         </motion.button>
       </motion.div>
       
-      {/* Onboarding Button (for development) */}
-      <motion.div variants={itemVariants} className="mt-6">
-        <motion.button 
-          className="w-full py-3 rounded-xl bg-dark-elevated/50 border border-white/5 flex items-center justify-center"
-          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.05)' }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <span className="text-tiny font-medium text-light-text/50">Start Onboarding (Dev Only)</span>
-        </motion.button>
+      {/* App Version */}
+      <motion.div 
+        variants={itemVariants}
+        className="mt-6 text-center"
+      >
+        <p className="text-tiny text-light-text/40">Budget App v2.0.1</p>
       </motion.div>
     </motion.div>
   );
 };
 
-export default Settings;
+export default Profile; 

@@ -1,22 +1,30 @@
 // src/components/layout/AppLayout.jsx
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import BottomNavigation from './BottomNavigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AppLayout = () => {
+  const location = useLocation();
+
   return (
-    <div className="flex flex-col h-full">
-      <main className="flex-1 overflow-y-auto pb-16">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="container mx-auto px-4 py-6 max-w-md"
-        >
-          <Outlet />
-        </motion.div>
+    <div className="flex flex-col h-full bg-dark">
+      <main className="flex-1 overflow-y-auto pb-24">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0.8, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0.8, y: -10 }}
+            transition={{ 
+              duration: 0.2,
+              ease: "easeInOut"
+            }}
+            className="container mx-auto px-4 py-6 max-w-md"
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
       <BottomNavigation />
     </div>
